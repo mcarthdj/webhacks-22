@@ -134,7 +134,7 @@ def update_structure():
     structures.power_week[phDay].times[phTime][0] = structures.power_week[phDay].times[phTime][0] + phLC
     structures.power_week[phDay].times[phTime][1] = structures.power_week[phDay].times[phTime][1] + 1
     
-    return trackLC
+    pass
 
 
 def get_weeks():

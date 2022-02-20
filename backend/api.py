@@ -23,8 +23,11 @@ def print_api():
 def print_api():
     return update.get_weeks()
 
+@app.get("/schedule/get_best_interval")
+def print_api():
+    return schedule.get_best_interval()
 
-@app.get("/schedule.py/parseUserData/day/{day}/level{level}/timeString/{timeString}")
+@app.get("/schedule.py/get_best_times/day/{day}/level/{level}/timeString/{timeString}")
 def print_api(day: str, level: str, timeString: str ):
-    return schedule.parse_user_data(day, level, timeString)
+    return schedule.get_best_times(day, level, timeString)
 
