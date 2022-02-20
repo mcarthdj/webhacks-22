@@ -52,13 +52,13 @@ def get_week_intervals(startList, endList):
     return timeList
             
   
-def get_intervals_avgs(week, intervalsList):
+def get_intervals_avgs(week, day, intervalsList):
     avgList = []
     for i in range(len(intervalsList)):
         interval = intervalsList[i]
         avgIntList = []
         for time in interval:
-           avgIntList.append(week[time][0] / week[time][1])
+           avgIntList.append(week[day].times[time][0] / (week[day].times[time][1] + 1)) # dont forget to remove 1
         avgList.append(avgIntList)
     return avgList
 
@@ -71,7 +71,7 @@ def get_best_interval(intervalList, avgList):
         intLowAvg = 1000
         intLowIdx = 0
 
-        for j in range(len(intervalList[i]) - 2):
+        for j in range(len(intervalList[i]) - 1):
             currAvg = (avgList[i][j] + avgList[i][j + 1]) / 2
             currIdx = [i, j]
 
@@ -93,8 +93,10 @@ def get_best_times(day, level, timeString):
     levels = {'Track' : structures.track_week, 'Level 3': structures.level3_week, 'Level 2': structures.level2_week, 'Level 1': structures.level1_week, 'Power House': structures.power_week}
     week = levels[level]
     intervalsList = get_week_intervals(startList, endList) # returns list of intervals
-    avgsList = get_intervals_avgs(week, intervalsList) # returns list of averages for intervals
-    optimalInterval = get_best_interval(intervalsList, avgsList) # returns the optimal interval from averages
-    return optimalInterval
+    avgsList = get_intervals_avgs(week, day, intervalsList) # returns list of averages for intervals
+    optimalStartTime = get_best_interval(intervalsList, avgsList) # returns the optimal interval from averages
+    optimalEndTime = increment_time(optimalStartTime)
+    optimalEndTime = increment_time(optimalEndTime)
+    return optimalStartTime + "-" + optimalEndTime
 
 
